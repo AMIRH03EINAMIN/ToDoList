@@ -1,0 +1,304 @@
+/*------------------------------|Var|------------------------------*/
+/*------------------------------|Tag-Style|------------------------------*/
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: #222222;
+}
+
+button {
+  cursor: pointer;
+}
+
+a {
+  text-decoration: none;
+}
+
+ul {
+  list-style-type: none;
+}
+
+/*------------------------------|General Class|------------------------------*/
+.middle {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+/*--------------------|overlay|--------------------*/
+div#overlay {
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  z-index: 98;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  background-color: rgba(0, 0, 0, 0.5);
+  animation-name: overlayClose;
+  animation-duration: 0.3s;
+  animation-fill-mode: forwards;
+}
+@keyframes overlayClose {
+  0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+div#overlay div.modal {
+  width: 500px;
+  padding: 20px 30px;
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+  background-color: #ECF9FF;
+  animation-name: modalClose;
+  animation-duration: 0.5s;
+  animation-fill-mode: forwards;
+}
+@keyframes modalClose {
+  0% {
+    opacity: 1;
+    transform: translateY(0px);
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(-150px);
+  }
+}
+div#overlay div.modal div.modal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  color: #222222;
+  font-size: 30px;
+}
+div#overlay div.modal div.modal-header i {
+  cursor: pointer;
+  transition: all 0.2s;
+}
+div#overlay div.modal div.modal-header i:hover {
+  color: #FF6969;
+}
+div#overlay div.modal div.modal-body {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+div#overlay div.modal div.modal-body label input {
+  width: 100%;
+  height: 40px;
+  padding: 0 10px;
+}
+div#overlay div.modal div.modal-body label[data-error] {
+  position: relative;
+}
+div#overlay div.modal div.modal-body label[data-error] > * {
+  border: 1px solid #FF6969;
+  outline: 1px solid #FF6969;
+  border-radius: 5px;
+}
+div#overlay div.modal div.modal-body label[data-error]::before {
+  position: absolute;
+  bottom: -18px;
+  content: attr(data-error);
+  color: #FF6969;
+  font-size: 16px;
+}
+div#overlay div.modal div.modal-body select {
+  height: 40px;
+  padding: 0 10px;
+}
+div#overlay div.modal div.modal-body p {
+  font-size: 20px;
+  color: #222222;
+}
+div#overlay div.modal div.modal-footer {
+  display: flex;
+  justify-content: end;
+  gap: 10px;
+}
+div#overlay div.modal div.modal-footer button {
+  padding: 10px 15px;
+  border-radius: 5px;
+  border: none;
+  transition: all 0.2s;
+}
+div#overlay div.modal div.modal-footer button:hover {
+  transform: scale(0.95);
+}
+div#overlay div.modal div.modal-footer #ok {
+  background-color: #B3FFAE;
+}
+div#overlay div.modal div.modal-footer #cancel {
+  background-color: #FF6969;
+}
+div#overlay .modal-show {
+  animation-name: modalShow !important;
+}
+@keyframes modalShow {
+  0% {
+    opacity: 0;
+    transform: translateY(-150px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0px);
+  }
+}
+
+.overlay-show {
+  animation-name: overlayShow !important;
+}
+@keyframes overlayShow {
+  100% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+/*--------------------|Notification|--------------------*/
+#notification {
+  height: 100%;
+  padding: 50px 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  gap: 10px;
+  position: fixed;
+  right: 0;
+  z-index: 99;
+}
+#notification li {
+  padding: 10px 20px;
+  border-radius: 5px;
+  color: #222222;
+  font-size: 20px;
+  animation-name: notificationClose;
+  animation-duration: 0.8s;
+  animation-fill-mode: forwards;
+}
+@keyframes notificationClose {
+  0% {
+    transform: translateX(0px) rotateZ(0deg);
+  }
+  100% {
+    transform: translateX(200px) rotateZ(90deg);
+  }
+}
+#notification .notification-show {
+  animation-name: notificationShow !important;
+}
+@keyframes notificationShow {
+  0% {
+    transform: translateX(200px) rotateZ(90deg);
+  }
+  100% {
+    transform: translateX(0px) rotateZ(0deg);
+  }
+}
+#notification .notification-red {
+  background-color: #FF6969;
+}
+#notification .notification-yellow {
+  background-color: #F8F988;
+}
+#notification .notification-green {
+  background-color: #B3FFAE;
+}
+
+/*------------------------------|Main|------------------------------*/
+main {
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  gap: 5px;
+  animation-name: main;
+  animation-duration: 1s;
+  animation-delay: 0.3s;
+}
+main table.task-table {
+  width: 800px;
+  margin-top: 70px;
+}
+main table.task-table thead tr td {
+  padding: 5px 0;
+  border: 2px solid #95BDFF;
+}
+main table.task-table tr {
+  display: grid;
+  grid-template-columns: 1fr 2fr 100px 120px 150px;
+  grid-template-rows: 45px;
+}
+main table.task-table tr td {
+  font-size: 25px;
+  color: #ECF9FF;
+  text-align: center;
+}
+main table.task-table tbody td {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-bottom: 1px solid #A7BBC7;
+}
+main table.task-table tbody td:last-child {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+}
+main table.task-table tbody td:last-child button {
+  width: 50px;
+  padding: 7px;
+  border: none;
+  transition: all 0.3s;
+}
+main table.task-table tbody td:last-child button:nth-child(1) {
+  background-color: #F8F988;
+}
+main table.task-table tbody td:last-child button:nth-child(2) {
+  background-color: #FF6969;
+}
+main table.task-table tbody td:last-child button:hover {
+  border-radius: 25px 5px 25px 5px;
+}
+main > button {
+  height: 45px;
+  padding: 5px 10px;
+  margin-top: 72px;
+  font-size: 18px;
+  color: #222222;
+  background-color: #7286D3;
+  border: none;
+  transition: all 0.3s;
+}
+main > button:hover {
+  border-radius: 5px 25px 5px 25px;
+}
+
+/*------------------------------|Animation|------------------------------*/
+@keyframes main {
+  0% {
+    opacity: 0;
+    transform: scaleX(0);
+  }
+  100% {
+    opacity: 1;
+    transform: scaleX(1);
+  }
+}
+/*------------------------------|Media-Max-992|------------------------------*/
+/*------------------------------|Media-Max-768|------------------------------*/
+/*------------------------------|Media-Max-480|------------------------------*//*# sourceMappingURL=style.css.map */

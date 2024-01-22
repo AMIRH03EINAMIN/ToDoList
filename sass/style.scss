@@ -1,0 +1,334 @@
+/*------------------------------|Var|------------------------------*/
+
+$clr-Black:#222222;
+$clr-Black-light:#272727;
+$clr-White:#ECF9FF;
+$clr-Gray:#A7BBC7;
+$clr-Green:#B3FFAE;
+$clr-Red:#FF6969;
+$clr-Blue:#95BDFF;
+$clr-Yellow:#F8F988;
+$clr-Purple:#7286D3;
+$transition-2: all 0.2s; 
+$transition-3: all 0.3s; 
+$transition-5: all 0.5s; 
+/*------------------------------|Tag-Style|------------------------------*/
+
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+html{
+    scroll-behavior: smooth;
+}
+body{
+    background-color: $clr-Black;
+}
+button{
+    cursor: pointer;
+}
+a{
+    text-decoration: none;
+}
+ul{
+    list-style-type: none;
+}
+
+/*------------------------------|General Class|------------------------------*/
+.middle{
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+/*--------------------|overlay|--------------------*/
+div#overlay{
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    z-index: 98;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    background-color: rgba(0, 0, 0, 0.5);
+    animation-name: overlayClose;
+    animation-duration: 0.3s;
+    animation-fill-mode: forwards;
+    @keyframes overlayClose{
+        0%{
+            opacity: 1;
+        }
+        100%{
+            opacity: 0;
+        }
+    }
+    div.modal{
+        width: 500px;
+        padding: 20px 30px;
+        display: flex;
+        flex-direction: column;
+        gap: 40px;
+        background-color: $clr-White;
+        animation-name: modalClose;
+        animation-duration: 0.5s;
+        animation-fill-mode: forwards;
+        @keyframes modalClose{
+            0%{
+                opacity: 1;
+                transform: translateY(0px);
+            }
+            100%{
+                opacity: 0;
+                transform: translateY(-150px);
+            }
+        }
+        div.modal-header{
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            color: $clr-Black;
+            font-size: 30px;
+            i{
+                cursor: pointer;
+                transition: $transition-2;
+                &:hover{
+                    color: $clr-Red;
+                }
+            }
+        }
+        div.modal-body{
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            label{
+                input{
+                    width: 100%;
+                    height: 40px;
+                    padding: 0 10px;
+                }
+            }
+            label[data-error]{
+                position: relative;
+                & > *{
+                    border: 1px solid $clr-Red;
+                    outline: 1px solid $clr-Red;
+                    border-radius: 5px;
+                }
+            }
+            label[data-error]::before{
+                position: absolute;
+                bottom: -18px;
+                content: attr(data-error);
+                color: $clr-Red;
+                font-size: 16px;
+            }
+            select{
+                height: 40px;
+                padding: 0 10px;
+            }
+            p{
+                font-size: 20px;
+                color: $clr-Black;
+            }
+        }
+        div.modal-footer{
+            display: flex;
+            justify-content: end;
+            gap: 10px;
+            button{
+                padding: 10px 15px;
+                border-radius: 5px;
+                border: none;
+                transition: $transition-2;
+                &:hover{
+                    transform: scale(0.95);
+                }
+            }
+            #ok{
+                background-color: $clr-Green;
+            }
+            #cancel{
+                background-color: $clr-Red;
+            }
+        }
+    }
+    .modal-show{
+        animation-name: modalShow !important;
+        @keyframes modalShow{
+            0%{
+                opacity: 0;
+                transform: translateY(-150px);
+            }
+            100%{
+                opacity: 1;
+                transform: translateY(0px);
+            }
+        }
+    }
+}
+.overlay-show{
+    animation-name: overlayShow !important;
+    @keyframes overlayShow{
+        100%{
+            opacity: 0;
+        }
+        100%{
+            opacity: 1;
+        }
+    }
+}
+/*--------------------|Notification|--------------------*/
+#notification{
+    height: 100%;
+    padding: 50px 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    gap: 10px;
+    position: fixed;
+    right: 0;
+    z-index: 99;
+    li{
+        padding: 10px 20px;
+        border-radius: 5px;
+        color: $clr-Black;
+        font-size: 20px;
+        animation-name: notificationClose;
+        animation-duration: 0.8s;
+        animation-fill-mode: forwards;
+        @keyframes notificationClose{
+            0%{
+                transform: translateX(0px) rotateZ(0deg);
+            }
+            100%{
+                transform: translateX(200px) rotateZ(90deg);
+            }
+        }
+    }
+    .notification-show{
+        animation-name: notificationShow !important;
+        @keyframes notificationShow{
+            0%{
+                transform: translateX(200px) rotateZ(90deg);
+            }
+            100%{
+                transform: translateX(0px) rotateZ(0deg);
+            }
+        }
+    }
+    .notification-red{
+        background-color: $clr-Red;
+    }
+    .notification-yellow{
+        background-color: $clr-Yellow;
+    }
+    .notification-green{
+        background-color: $clr-Green;
+    }
+}
+/*------------------------------|Main|------------------------------*/
+
+main{
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    gap: 5px;
+    animation-name: main;
+    animation-duration: 1s;
+    animation-delay: 0.3s;
+    table.task-table{
+        width: 800px;
+        margin-top: 70px;
+        thead{
+            tr{
+                td{
+                    padding: 5px 0;
+                    border: 2px solid $clr-Blue;
+                }
+            }
+        }
+        tr{
+            display: grid;
+            grid-template-columns: 1fr 2fr 100px 120px 150px;
+            grid-template-rows: 45px;
+            td{
+                font-size: 25px;
+                color: $clr-White;
+                text-align: center;
+            }
+        }
+        tbody{
+            td{
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                border-bottom: 1px solid $clr-Gray;
+                &:last-child{
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    gap: 5px;
+                    button{
+                        width: 50px;
+                        padding: 7px;
+                        border: none;
+                        transition: $transition-3;
+                        &:nth-child(1){
+                            background-color: $clr-Yellow;
+                        }
+                        &:nth-child(2){
+                            background-color: $clr-Red;
+                        }
+                        &:hover{
+                            border-radius: 25px 5px 25px 5px;
+                        }
+                    }
+                }
+            }
+        }
+    }
+    >button{
+        height: 45px;
+        padding: 5px 10px;
+        margin-top: 72px;
+        font-size: 18px;
+        color: $clr-Black;
+        background-color: $clr-Purple;
+        border: none;
+        transition: $transition-3;
+        &:hover{
+            border-radius: 5px 25px 5px 25px;
+        }
+    }
+}
+
+/*------------------------------|Animation|------------------------------*/
+
+@keyframes main {
+    0%{
+        opacity: 0;
+        transform: scaleX(0);
+    }
+    100%{
+        opacity: 1;
+        transform: scaleX(1);
+    }
+}
+
+/*------------------------------|Media-Max-992|------------------------------*/
+
+@media screen and (max-width:992px){
+    
+}
+
+/*------------------------------|Media-Max-768|------------------------------*/
+
+@media screen and (max-width:768px){
+    
+}
+
+/*------------------------------|Media-Max-480|------------------------------*/
+
+@media screen and (max-width:480px){
+    
+}
